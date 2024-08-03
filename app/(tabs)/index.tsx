@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, FlatList, Linking, Alert } from 'react-native';
 import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
+import axios from 'axios';
 
 const pains = [
   { id: '1', name: 'Back Pain', exercises: ['Stretching', 'Yoga'], website: 'https://www.example.com/back-pain' },
@@ -10,20 +11,21 @@ const pains = [
 ];
 
 export default function MainPage() {
-  const [selectedPain, setSelectedPain] = useState(null);
+  const [selectedPain, setSelectedPain] = useState<any>(null);
   const [user, setUser] = useState({ name: '', streak: '' });
   const route = useRoute();
-  const { userId } = route.params || {}; // Get userId from route params
-
+  const { userId}:any = route.params || {}; // Get userId from route params
+  console.log(userId)
   useEffect(() => {
     if (userId) {
       const fetchUserData = async () => {
         try {
-          const response = await fetch(`http://192.168.29.23:3001/getUserDetails/${userId}`);
-          if (!response.ok) {
+          const response = await axios.get(`http://192.168.29.23:5000/api/app/user/${userId}`);
+          console.log(response.data)
+          if (!response) {
             throw new Error('Network response was not ok');
           }
-          const data = await response.json();
+          const data = await response.data.response;
           setUser({ name: data.name, streak: data.streak });
         } catch (error) {
           console.error('Error fetching user data:', error);
@@ -35,11 +37,11 @@ export default function MainPage() {
     }
   }, [userId]);
 
-  const handlePainSelect = (pain) => {
+  const handlePainSelect = (pain:any) => {
     setSelectedPain(pain);
   };
 
-  const handleWebsiteVisit = (url) => {
+  const handleWebsiteVisit = (url:any) => {
     Linking.openURL(url);
   };
 
@@ -73,7 +75,7 @@ export default function MainPage() {
       {selectedPain && (
         <View style={styles.exerciseContainer}>
           <Text style={styles.sectionTitle}>Exercises for {selectedPain.name}</Text>
-          {selectedPain.exercises.map((exercise, index) => (
+          {selectedPain.exercises.map((exercise:any, index:number) => (
             <Text key={index} style={styles.exerciseText}>{exercise}</Text>
           ))}
           <TouchableOpacity onPress={() => handleWebsiteVisit(selectedPain.website)}>

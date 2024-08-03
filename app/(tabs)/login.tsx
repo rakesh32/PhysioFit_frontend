@@ -1,40 +1,43 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, ScrollView } from 'react-native';
 import axios from 'axios';
+import userService from '../../service/user-service'
 import { useNavigation } from '@react-navigation/native';
 
 const Login = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const navigation = useNavigation();
+  const navigation = useNavigation<String>();
 
   axios.defaults.withCredentials = true;
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     // Validate email and password
     if (!email || !password) {
       Alert.alert('Please enter email and password');
       return;
     }
-  
+    const payload = {
+      email,
+      password
+    }
     // Make API request to validate credentials
-    axios.post('http://192.168.29.23:3001/userlogin', { email, password })
-      .then(res => {
-        if (res.data.Login) {
-          const match_user_id = res.data._id;
-          if (match_user_id) {
-            navigation.navigate('index',{ userId: match_user_id });  // Navigate to index in the tabs folder
-          } else {
-            navigation.navigate('tabs');  // Navigate to the main tab navigator
-          }
-        } else {
-          Alert.alert('Invalid credentials');
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        Alert.alert('An error occurred during login');
-      });
+    try{
+      const res = await userService.login(payload)
+    if (res.response.Login) {
+      const match_user_id = res.response._id;
+      if (match_user_id) {
+        navigation.navigate('index',{ userId: match_user_id });  // Navigate to index in the tabs folder
+      } else {
+        // navigation.navigate('tabs');  // Navigate to the main tab navigator
+        Alert.alert('user not found')
+      }
+    } else {
+      Alert.alert('Invalid credentials');
+    }
+    }catch(e){
+      console.log(e)
+    }
   };
 
   return (
