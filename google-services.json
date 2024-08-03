@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "419006468420",
+    "project_id": "physiofit-7f89c",
+    "storage_bucket": "physiofit-7f89c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:419006468420:android:4ad07e6a5d7683ab584711",
+        "android_client_info": {
+          "package_name": "com.physiofit.rakesh"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiRNrwkNWBtgJc6koyihlUaPnxtULbWEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

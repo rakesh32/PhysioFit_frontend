@@ -15,12 +15,21 @@ export default function TabLayout() {
         headerShown: false,
       }}>
       <Tabs.Screen
+        name="login"
+        options={{
+          title: 'Login',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
-          ),
+          ),  
         }}
       />
       <Tabs.Screen
@@ -32,6 +41,34 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="item"
+        options={{
+          title: 'Item',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="booking"
+        options={{
+          title: 'Booking',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
+          ),
+        }}
+      />
+
+      {/* <Tabs.Screen
+        name="streak"
+        options={{
+          title: 'streak',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'search' : 'search-outline'} color={color} />
+          ),
+        }}
+      /> */}
     </Tabs>
   );
 }
